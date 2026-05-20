@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Здоровье">
+<title>Дашборд здоровья</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:#f2f2f7;color:#1c1c1e;min-height:100vh;}
+.app{max-width:430px;margin:0 auto;padding:0 0 48px;}
+
+.header{background:#fff;padding:16px 20px 12px;border-bottom:0.5px solid #d1d1d6;position:sticky;top:0;z-index:20;}
+.header-row{display:flex;align-items:center;justify-content:space-between;}
+.header-title{font-size:20px;font-weight:600;margin:0;}
+.header-date{font-size:13px;color:#636366;margin:2px 0 0;}
+.score-circle{width:52px;height:52px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:2.5px solid #e5e5ea;transition:border-color .3s,color .3s;}
+.score-circle.ok{border-color:#30d158;color:#1d7a57;}
+.score-circle.warn{border-color:#ff9f0a;color:#854f0b;}
+.score-circle.bad{border-color:#ff3b30;color:#a32d2d;}
+.score-label{font-size:9px;font-weight:400;color:currentColor;margin-top:-1px;}
+
+.section{padding:14px 16px 0;}
+.section-title{font-size:13px;font-weight:500;color:#636366;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 10px;}
+
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 14px;}
+.mcard{background:#fff;border-radius:14px;padding:13px 14px 12px;position:relative;overflow:hidden;}
+.mcard-status{position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
+.mcard-status.ok{background:#30d158;}
+.mcard-status.warn{background:#ff9f0a;}
+.mcard-status.na{background:#e5e5ea;}
+.mcard-icon{font-size:20px;color:#636366;margin-bottom:5px;}
+.mcard-name{font-size:12px;color:#636366;margin:0 0 3px;}
+.mcard-val{font-size:22px;font-weight:600;color:#1c1c1e;margin:0;line-height:1.1;}
+.mcard-unit{font-size:13px;font-weight:400;color:#8e8e93;}
+.mcard-norm{font-size:11px;margin:4px 0 0;}
+.mcard-norm.ok{color:#1d7a57;}
+.mcard-norm.warn{color:#854f0b;}
+.mcard-norm.na{color:#aeaeb2;}
+
+.import-section{background:#fff;margin:0 16px 14px;border-radius:14px;padding:16px;}
+.import-title{font-size:15px;font-weight:600;margin:0 0 12px;}
+.import-btn{width:100%;height:46px;font-size:15px;font-weight:500;border-radius:12px;border:1.5px dashed #c7c7cc;background:#f9f9f9;color:#007aff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;margin-bottom:8px;}
+.import-btn:active{opacity:.7;}
+.import-result{font-size:13px;padding:10px 12px;border-radius:10px;margin-top:8px;display:none;line-height:1.5;}
+.import-result.ok{background:#edfaf4;color:#1d7a57;}
+.import-result.err{background:#fff0f0;color:#c0392b;}
+
+.shortcuts-card{background:#fff;margin:0 16px 14px;border-radius:14px;padding:16px;}
+.shortcuts-title{font-size:15px;font-weight:600;margin:0 0 12px;}
+.step-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+.step-num{width:24px;height:24px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-text{font-size:13px;color:#3c3c43;line-height:1.5;flex:1;}
+.step-text em{color:#007aff;font-style:normal;}
+
+.analyze-btn{margin:0 16px 14px;width:calc(100% - 32px);height:52px;font-size:16px;font-weight:600;border-radius:14px;border:none;background:#007aff;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;}
+.analyze-btn:active{opacity:.85;}
+
+.norms-card{background:#fff;margin:0 16px 14px;border-radius:14px;padding:16px;}
+.norms-title{font-size:15px;font-weight:600;margin:0 0 12px;}
+.norm-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #f2f2f7;font-size:13px;}
+.norm-row:last-child{border-bottom:none;}
+.norm-name{color:#3c3c43;}
+.norm-val{color:#636366;font-weight:500;}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c1c1e;color:#fff;padding:10px 20px;border-radius:99px;font-size:14px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:100;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <p class="header-title">Здоровье</p>
+      <p class="header-date" id="h-date">—</p>
+    </div>
+    <div class="score-circle na" id="score-circle">
+      <span id="score-num">—</span>
+      <span class="score-label">из 8</span>
+    </div>
+  </div>
+</div>
+
+<div class="section"><p class="section-title">Активность</p></div>
+<div class="metrics-grid">
+  <div class="mcard" id="card-calories">
+    <div class="mcard-status na" id="st-calories"></div>
+    <div class="mcard-icon">🔥</div>
+    <p class="mcard-name">Активные калории</p>
+    <p class="mcard-val" id="v-calories">—<span class="mcard-unit"></span></p>
+    <p class="mcard-norm na" id="n-calories">норма 500+ ккал</p>
+  </div>
+  <div class="mcard" id="card-steps">
+    <div class="mcard-status na" id="st-steps"></div>
+    <div class="mcard-icon">🚶</div>
+    <p class="mcard-name">Шаги</p>
+    <p class="mcard-val" id="v-steps">—</p>
+    <p class="mcard-norm na" id="n-steps">норма 7 000+</p>
+  </div>
+  <div class="mcard" id="card-exercise">
+    <div class="mcard-status na" id="st-exercise"></div>
+    <div class="mcard-icon">🏃</div>
+    <p class="mcard-name">Тренировки</p>
+    <p class="mcard-val" id="v-exercise">—<span class="mcard-unit"></span></p>
+    <p class="mcard-norm na" id="n-exercise">норма 30+ мин</p>
+  </div>
+  <div class="mcard" id="card-hr">
+    <div class="mcard-status na" id="st-hr"></div>
+    <div class="mcard-icon">❤️</div>
+    <p class="mcard-name">Пульс в покое</p>
+    <p class="mcard-val" id="v-hr">—<span class="mcard-unit"></span></p>
+    <p class="mcard-norm na" id="n-hr">норма 55–72 уд/мин</p>
+  </div>
+</div>
+
+<div class="section"><p class="section-title">Сон</p></div>
+<div class="metrics-grid">
+  <div class="mcard" id="card-sleep">
+    <div class="mcard-status na" id="st-sleep"></div>
+    <div class="mcard-icon">😴</div>
+    <p class="mcard-name">Общий сон</p>
+    <p class="mcard-val" id="v-sleep">—</p>
+    <p class="mcard-norm na" id="n-sleep">норма 7–9 ч</p>
+  </div>
+  <div class="mcard" id="card-deep">
+    <div class="mcard-status na" id="st-deep"></div>
+    <div class="mcard-icon">🧠</div>
+    <p class="mcard-name">Глубокий сон</p>
+    <p class="mcard-val" id="v-deep">—</p>
+    <p class="mcard-norm na" id="n-deep">норма 1,5–2 ч</p>
+  </div>
+  <div class="mcard" id="card-rem">
+    <div class="mcard-status na" id="st-rem"></div>
+    <div class="mcard-icon">👁️</div>
+    <p class="mcard-name">REM-сон</p>
+    <p class="mcard-val" id="v-rem">—</p>
+    <p class="mcard-norm na" id="n-rem">норма 1,5–2 ч</p>
+  </div>
+  <div class="mcard" id="card-hrv">
+    <div class="mcard-status na" id="st-hrv"></div>
+    <div class="mcard-icon">📊</div>
+    <p class="mcard-name">ВСР (HRV)</p>
+    <p class="mcard-val" id="v-hrv">—<span class="mcard-unit"></span></p>
+    <p class="mcard-norm na" id="n-hrv">норма 35–55 мс</p>
+  </div>
+</div>
+
+<div class="import-section">
+  <p class="import-title">📲 Импорт из Auto Export</p>
+  <button class="import-btn" onclick="document.getElementById('fi-multi').click()">
+    ＋ Выбрать CSV файлы (можно несколько)
+  </button>
+  <input type="file" id="fi-multi" accept=".csv,.json" multiple style="display:none" onchange="importFiles(event)">
+  <div class="import-result" id="import-result"></div>
+</div>
+
+<button class="analyze-btn" onclick="analyzeDay()">
+  📈 Анализ дня ↗
+</button>
+
+<div class="shortcuts-card">
+  <p class="shortcuts-title">⏰ Автоэкспорт каждый день в 7:00</p>
+  <div class="step-row"><div class="step-num">1</div><div class="step-text">Открой <em>Быстрые команды</em> на iPhone → вкладка <em>Автоматизация</em></div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-text">Нажми <em>+</em> → <em>Личная автоматизация</em> → <em>Время суток</em> → 07:00 → Ежедневно</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-text">Добавь действие <em>Открыть приложение</em> → выбери <em>Health Auto Export</em></div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-text">В Auto Export настрой <em>Автоэкспорт</em>: все нужные метрики → формат CSV → папка в Файлах</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-text">Каждое утро открываешь дашборд → нажимаешь <em>Импорт</em> → выбираешь вчерашние файлы</div></div>
+</div>
+
+<div class="norms-card">
+  <p class="norms-title">📋 Нормы для тебя (муж., 48 лет)</p>
+  <div class="norm-row"><span class="norm-name">Активные калории</span><span class="norm-val">500+ ккал</span></div>
+  <div class="norm-row"><span class="norm-name">Шаги</span><span class="norm-val">7 000–10 000</span></div>
+  <div class="norm-row"><span class="norm-name">Тренировки</span><span class="norm-val">30+ мин/день</span></div>
+  <div class="norm-row"><span class="norm-name">Пульс в покое</span><span class="norm-val">55–72 уд/мин</span></div>
+  <div class="norm-row"><span class="norm-name">Общий сон</span><span class="norm-val">7–9 часов</span></div>
+  <div class="norm-row"><span class="norm-name">Глубокий сон</span><span class="norm-val">1,5–2 ч (≥18%)</span></div>
+  <div class="norm-row"><span class="norm-name">REM-сон</span><span class="norm-val">1,5–2 ч (≥17%)</span></div>
+  <div class="norm-row"><span class="norm-name">ВСР (HRV)</span><span class="norm-val">35–55 мс</span></div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const NORMS={
+  calories:{min:500,good:700,unit:'ккал'},
+  steps:{min:7000,good:10000,unit:''},
+  exercise:{min:30,good:45,unit:'мин'},
+  hr:{min:55,max:72,warnMax:85,unit:'уд/мин'},
+  sleep:{min:420,good:480,max:540,unit:''},
+  deep:{min:90,good:110,unit:''},
+  rem:{min:90,good:110,unit:''},
+  hrv:{min:35,good:45,max:55,unit:'мс'}
+};
+
+let data={calories:null,steps:null,exercise:null,hr:null,sleep:null,deep:null,rem:null,hrv:null};
+
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+function setCard(key,val,unit){
+  const n=NORMS[key];
+  let status='na',normText='',normClass='na';
+  let display=val;
+
+  if(key==='sleep'||key==='deep'||key==='rem'){
+    const h=Math.floor(val/60),m=Math.round(val%60);
+    display=h+'ч '+(m>0?m+'м':'');
+  }else if(key==='steps'){
+    display=val>=1000?Math.floor(val/1000)+' '+((val%1000)>=100?Math.round((val%1000)/100)*100:''): val;
+    display=val.toLocaleString('ru');
+  }else{
+    display=Math.round(val)+(unit?' '+unit:'');
+  }
+
+  if(key==='hr'){
+    if(val>=n.min&&val<=n.max){status='ok';normText='В норме ✓';normClass='ok';}
+    else if(val<=n.warnMax){status='warn';normText='Выше нормы ⚠';normClass='warn';}
+    else{status='warn';normText='Требует внимания ⚠';normClass='warn';}
+  }else if(key==='hrv'){
+    if(val>=n.min&&val<=n.max){status='ok';normText='В норме ✓';normClass='ok';}
+    else if(val>=n.min-10){status='warn';normText='Немного низкий ⚠';normClass='warn';}
+    else{status='warn';normText='Низкий ⚠';normClass='warn';}
+  }else{
+    if(val>=n.good){status='ok';normText='Отлично ✓';normClass='ok';}
+    else if(val>=n.min){status='ok';normText='В норме ✓';normClass='ok';}
+    else{status='warn';normText='Дефицит ⚠';normClass='warn';}
+  }
+
+  document.getElementById('v-'+key).textContent=display;
+  const st=document.getElementById('st-'+key);
+  st.className='mcard-status '+status;
+  const nm=document.getElementById('n-'+key);
+  nm.textContent=normText;
+  nm.className='mcard-norm '+normClass;
+
+  data[key]=val;
+  updateScore();
+}
+
+function updateScore(){
+  const keys=Object.keys(data);
+  const filled=keys.filter(k=>data[k]!==null);
+  if(!filled.length)return;
+  let ok=0;
+  filled.forEach(k=>{
+    const n=NORMS[k],v=data[k];
+    if(k==='hr'){if(v>=n.min&&v<=n.max)ok++;}
+    else if(k==='hrv'){if(v>=n.min)ok++;}
+    else{if(v>=n.min)ok++;}
+  });
+  const el=document.getElementById('score-circle');
+  const num=document.getElementById('score-num');
+  num.textContent=ok+'/'+filled.length;
+  const pct=ok/filled.length;
+  el.className='score-circle '+(pct>=0.75?'ok':pct>=0.5?'warn':'bad');
+}
+
+function importFiles(e){
+  const files=Array.from(e.target.files);
+  if(!files.length)return;
+  let imported=[];
+  let pending=files.length;
+  files.forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{
+      const res=parseHealthCSV(f.name,ev.target.result);
+      imported=imported.concat(res);
+      pending--;
+      if(pending===0)finishImport(imported);
+    };
+    r.readAsText(f);
+  });
+  e.target.value='';
+}
+
+function parseHealthCSV(fname,text){
+  const fl=fname.toLowerCase();
+  let type=null;
+  if(/(active.?energy|calories|калори)/i.test(fl))type='calories';
+  else if(/(step.?count|steps|шаги)/i.test(fl))type='steps';
+  else if(/(exercise|workout|тренир)/i.test(fl))type='exercise';
+  else if(/(resting.?heart|heart.?rate|пульс)/i.test(fl))type='hr';
+  else if(/(sleep.?analysis|sleep|сон)/i.test(fl))type='sleep';
+  else if(/(hrv|heart.?rate.?variability|всрс?)/i.test(fl))type='hrv';
+
+  if(!type)return[];
+
+  const lines=text.trim().split(/\r?\n/);
+  if(lines.length<2)return[];
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/["']/g,'').toLowerCase());
+  const valIdx=headers.findIndex(h=>/(qty|value|quantity|duration|значение)/i.test(h));
+  const unitIdx=headers.findIndex(h=>/(unit|ед)/i.test(h));
+  if(valIdx<0)return[];
+
+  let vals=[];
+  lines.slice(1).forEach(line=>{
+    if(!line.trim())return;
+    const cols=line.split(',').map(c=>c.trim().replace(/["']/g,''));
+    const v=parseFloat(cols[valIdx]);
+    if(isNaN(v))return;
+    const unit=(unitIdx>=0?cols[unitIdx]:'').toLowerCase();
+    const kcal=unit.includes('kcal')||unit.includes('кдж')||unit.includes('cal');
+    vals.push({type,value:v,unit});
+  });
+
+  if(!vals.length)return[];
+
+  let result=null;
+  if(type==='sleep'){
+    const totalMin=vals.reduce((s,v)=>s+v.value,0);
+    result={type:'sleep',value:totalMin};
+  }else if(type==='hr'){
+    const avg=vals.reduce((s,v)=>s+v.value,0)/vals.length;
+    result={type:'hr',value:avg};
+  }else if(type==='hrv'){
+    const avg=vals.reduce((s,v)=>s+v.value,0)/vals.length;
+    result={type:'hrv',value:avg};
+  }else{
+    const total=vals.reduce((s,v)=>s+v.value,0);
+    result={type,value:total};
+  }
+
+  return result?[result]:[];
+}
+
+function finishImport(results){
+  const el=document.getElementById('import-result');
+  if(!results.length){
+    el.textContent='⚠️ Данные не распознаны. Проверь названия файлов.';
+    el.className='import-result err';
+    el.style.display='block';
+    return;
+  }
+
+  const units={calories:'ккал',steps:'',exercise:'мин',hr:'уд/мин',sleep:'мин',deep:'мин',rem:'мин',hrv:'мс'};
+  results.forEach(r=>{setCard(r.type,r.value,units[r.type]||'');});
+
+  el.textContent='✅ Загружено метрик: '+results.length+' — '+results.map(r=>({calories:'Калории',steps:'Шаги',exercise:'Тренировки',hr:'Пульс',sleep:'Сон',hrv:'HRV'}[r.type]||r.type)).join(', ');
+  el.className='import-result ok';
+  el.style.display='block';
+  toast('✅ Данные импортированы!');
+}
+
+function analyzeDay(){
+  const lines=[];
+  const labels={calories:'Активные калории',steps:'Шаги',exercise:'Тренировки',hr:'Пульс в покое',sleep:'Общий сон',deep:'Глубокий сон',rem:'REM-сон',hrv:'ВСР (HRV)'};
+  const units2={calories:'ккал',steps:'шагов',exercise:'мин',hr:'уд/мин',sleep:'мин',deep:'мин',rem:'мин',hrv:'мс'};
+  let hasData=false;
+  Object.keys(data).forEach(k=>{
+    if(data[k]!==null){
+      hasData=true;
+      lines.push(labels[k]+': '+Math.round(data[k])+' '+units2[k]);
+    }
+  });
+  if(!hasData){
+    toast('⚠️ Сначала импортируй данные');
+    return;
+  }
+  const msg='Вот мои данные здоровья за сегодня (мне 48 лет, цель — похудеть на 13 кг):\n'+lines.join('\n')+'\n\nПроанализируй каждый показатель, сравни с нормами для моего возраста и дай конкретные рекомендации что улучшить.';
+  if(typeof sendPrompt==='function'){sendPrompt(msg);}else{
+    navigator.clipboard&&navigator.clipboard.writeText(msg);
+    toast('📋 Скопировано — вставь в Claude!');
+  }
+}
+
+const now=new Date();
+document.getElementById('h-date').textContent=now.toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'});
+</script>
+</body>
+</html>
