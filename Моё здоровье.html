@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_4.html -->
+<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_5.html -->
 <html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -210,7 +210,6 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="./Моё здоровье_files/jszip.min.js.Без названия"></script>
 <script src="./Моё здоровье_files/chart.umd.js.Без названия"></script>
 <script>
 // ── TABS ──
@@ -341,20 +340,54 @@ function zipChosen(e){const f=e.target.files[0];if(f)processFile(f);e.target.val
 function processFile(file){
   const res=document.getElementById('hd-res');
   res.style.display='none';
-  if(file.name.endsWith('.zip')){
-    JSZip.loadAsync(file).then(zip=>{
-      const jsonFile=Object.values(zip.files).find(f=>f.name.endsWith('.json')&&!f.dir);
-      if(!jsonFile){showRes(false,'JSON файл не найден в архиве');return;}
-      jsonFile.async('string').then(text=>{
-        try{parseHealthJSON(JSON.parse(text));}
-        catch(e){showRes(false,'Ошибка чтения JSON: '+e.message);}
-      });
-    }).catch(e=>showRes(false,'Ошибка открытия ZIP: '+e.message));
-  }else if(file.name.endsWith('.json')){
+  if(!file){showRes(false,'Файл не выбран');return;}
+  const name=file.name.toLowerCase();
+  if(name.endsWith('.json')){
     const r=new FileReader();
-    r.onload=ev=>{try{parseHealthJSON(JSON.parse(ev.target.result));}catch(e){showRes(false,'Ошибка JSON');}};
+    r.onload=ev=>{try{parseHealthJSON(JSON.parse(ev.target.result));}catch(e){showRes(false,'Ошибка JSON: '+e.message);}};
+    r.onerror=()=>showRes(false,'Не удалось прочитать файл');
     r.readAsText(file);
-  }else{showRes(false,'Нужен ZIP или JSON файл из Auto Export');}
+  }else if(name.endsWith('.zip')){
+    const r=new FileReader();
+    r.onload=ev=>{
+      try{unzipAndParse(ev.target.result);}
+      catch(e){showRes(false,'Ошибка ZIP: '+e.message);}
+    };
+    r.onerror=()=>showRes(false,'Не удалось прочитать ZIP');
+    r.readAsArrayBuffer(file);
+  }else{
+    showRes(false,'Нужен JSON или ZIP файл из Auto Export');
+  }
+}
+
+function unzipAndParse(buffer){
+  const bytes=new Uint8Array(buffer);
+  const text=findJsonInZip(bytes);
+  if(!text){showRes(false,'JSON не найден в ZIP архиве');return;}
+  try{parseHealthJSON(JSON.parse(text));}
+  catch(e){showRes(false,'Ошибка чтения данных: '+e.message);}
+}
+
+function findJsonInZip(bytes){
+  let i=0;
+  while(i<bytes.length-4){
+    if(bytes[i]===0x50&&bytes[i+1]===0x4B&&bytes[i+2]===0x03&&bytes[i+3]===0x04){
+      const fnLen=bytes[i+26]|(bytes[i+27]<<8);
+      const exLen=bytes[i+28]|(bytes[i+29]<<8);
+      const compSize=bytes[i+18]|(bytes[i+19]<<8)|(bytes[i+20]<<16)|(bytes[i+21]<<24);
+      const uncompSize=bytes[i+22]|(bytes[i+23]<<8)|(bytes[i+24]<<16)|(bytes[i+25]<<24);
+      const method=bytes[i+8]|(bytes[i+9]<<8);
+      const fnBytes=bytes.slice(i+30,i+30+fnLen);
+      const fname=new TextDecoder().decode(fnBytes);
+      const dataStart=i+30+fnLen+exLen;
+      if(fname.endsWith('.json')&&method===0){
+        const raw=bytes.slice(dataStart,dataStart+uncompSize);
+        return new TextDecoder('utf-8').decode(raw);
+      }
+      i=dataStart+compSize;
+    }else{i++;}
+  }
+  return null;
 }
 
 function parseHealthJSON(j){
