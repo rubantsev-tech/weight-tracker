@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_2.html -->
+<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_3.html -->
 <html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,22 +12,15 @@
 body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:#f2f2f7;color:#1c1c1e;min-height:100vh;}
 .page{display:none;max-width:430px;margin:0 auto;padding:0 0 90px;}
 .page.active{display:block;}
-
-/* Header */
 .header{background:#fff;padding:16px 20px 12px;border-bottom:0.5px solid #d1d1d6;position:sticky;top:0;z-index:20;}
 .header-row{display:flex;align-items:center;justify-content:space-between;}
 .header-title{font-size:20px;font-weight:600;margin:0;}
 .header-sub{font-size:13px;color:#636366;margin:2px 0 0;}
-
-/* Tab bar */
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:0.5px solid #d1d1d6;display:flex;z-index:30;padding-bottom:env(safe-area-inset-bottom);}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px 6px;cursor:pointer;gap:3px;border:none;background:none;}
 .tab-icon{font-size:24px;}
 .tab-label{font-size:10px;font-weight:500;color:#8e8e93;}
 .tab.active .tab-label{color:#007aff;}
-.tab.active .tab-icon{filter:none;}
-
-/* Weight page */
 .progress-wrap{margin-top:10px;background:#e5e5ea;border-radius:99px;height:6px;overflow:hidden;}
 .progress-fill{height:6px;border-radius:99px;background:#1d9e75;transition:width .4s ease;}
 .header-pct{font-size:26px;font-weight:600;color:#1d9e75;}
@@ -56,13 +49,15 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 .log-delta{font-size:13px;font-weight:500;min-width:50px;text-align:right;}
 .log-del{background:none;border:none;color:#c7c7cc;font-size:20px;padding:4px;cursor:pointer;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center;}
 .empty{text-align:center;padding:28px 20px;color:#c7c7cc;font-size:14px;line-height:1.6;}
-.import-wt{background:#fff;margin:0 16px 14px;border-radius:14px;padding:16px;}
-.import-btn{width:100%;height:46px;font-size:14px;font-weight:500;border-radius:12px;border:1.5px dashed #c7c7cc;background:#f9f9f9;color:#007aff;cursor:pointer;-webkit-appearance:none;margin-bottom:8px;}
-.import-res{font-size:13px;padding:10px 12px;border-radius:10px;margin-top:6px;display:none;line-height:1.5;}
+.import-box{background:#fff;margin:0 16px 14px;border-radius:14px;padding:16px;}
+.import-drop{border:2px dashed #c7c7cc;border-radius:12px;padding:20px 16px;text-align:center;cursor:pointer;transition:border-color .2s;}
+.import-drop.over{border-color:#007aff;background:#f0f6ff;}
+.import-drop-icon{font-size:36px;display:block;margin:0 auto 8px;}
+.import-drop-text{font-size:14px;color:#636366;margin:0 0 4px;}
+.import-drop-sub{font-size:12px;color:#aeaeb2;margin:0;}
+.import-res{font-size:13px;padding:10px 12px;border-radius:10px;margin-top:10px;display:none;line-height:1.5;}
 .import-res.ok{background:#edfaf4;color:#1d7a57;}
 .import-res.err{background:#fff0f0;color:#c0392b;}
-
-/* Health page */
 .score-circle{width:50px;height:50px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:2.5px solid #e5e5ea;transition:border-color .3s;}
 .score-circle.ok{border-color:#30d158;color:#1d7a57;}
 .score-circle.warn{border-color:#ff9f0a;color:#854f0b;}
@@ -83,12 +78,6 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 .mcard-norm.ok{color:#1d7a57;}
 .mcard-norm.warn{color:#854f0b;}
 .mcard-norm.na{color:#c7c7cc;}
-.import-hd{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;}
-.shortcuts-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;}
-.step-row{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start;}
-.step-num{width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.step-text{font-size:12px;color:#3c3c43;line-height:1.5;flex:1;}
-.step-text em{color:#007aff;font-style:normal;}
 .analyze-btn{margin:0 16px 12px;width:calc(100% - 32px);height:50px;font-size:16px;font-weight:600;border-radius:14px;border:none;background:#007aff;color:#fff;cursor:pointer;-webkit-appearance:none;}
 .analyze-btn:active{opacity:.85;}
 .norms-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;}
@@ -96,8 +85,11 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 .norm-row:last-child{border-bottom:none;}
 .norm-name{color:#3c3c43;}
 .norm-val{color:#636366;font-weight:500;}
-
-/* Animation */
+.shortcuts-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;}
+.step-row{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start;}
+.step-num{width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-text{font-size:12px;color:#3c3c43;line-height:1.5;flex:1;}
+.step-text em{color:#007aff;font-style:normal;}
 .anim-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;pointer-events:none;opacity:0;transition:opacity .3s;}
 .anim-overlay.show{opacity:1;}
 .anim-emoji{font-size:80px;animation:popIn .4s cubic-bezier(.17,.67,.35,1.3) forwards;}
@@ -107,9 +99,7 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 @keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .confetti-piece{position:fixed;pointer-events:none;z-index:998;animation:confettiFall linear forwards;}
 @keyframes confettiFall{0%{opacity:1;transform:translateY(-20px) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}
-
-/* Toast */
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c1c1e;color:#fff;padding:10px 20px;border-radius:99px;font-size:14px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:100;}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c1c1e;color:#fff;padding:10px 20px;border-radius:99px;font-size:14px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:200;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
@@ -119,43 +109,29 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 <div class="page active" id="page-weight">
   <div class="header">
     <div class="header-row">
-      <div>
-        <p class="header-title">Трекер веса</p>
-        <p class="header-sub">Цель: 95 → 82 кг · минус 13 кг</p>
-      </div>
+      <div><p class="header-title">Трекер веса</p><p class="header-sub">Цель: 95 → 82 кг · минус 13 кг</p></div>
       <div class="header-pct" id="wt-pct">0%</div>
     </div>
     <div class="progress-wrap"><div class="progress-fill" id="wt-pbar" style="width:0%"></div></div>
   </div>
-
   <div class="cards">
     <div class="card"><p class="card-label">Текущий вес</p><p class="card-val" id="wt-cur">—</p></div>
     <div class="card"><p class="card-label">Сброшено</p><p class="card-val" id="wt-lost">0.0<span class="card-unit"> кг</span></p></div>
     <div class="card"><p class="card-label">До цели</p><p class="card-val" id="wt-left">13.0<span class="card-unit"> кг</span></p></div>
     <div class="card"><p class="card-label">Измерений</p><p class="card-val" id="wt-cnt">0</p></div>
   </div>
-
   <div class="add-section">
-    <p class="section-title">➕ Добавить измерение</p>
+    <p class="section-title">➕ Добавить вес вручную</p>
     <div class="fields">
       <div class="field"><label for="wt-date">Дата</label><input type="date" id="wt-date"></div>
       <div class="field"><label for="wt-kg">Вес (кг)</label><input type="number" id="wt-kg" min="40" max="250" step="0.1" placeholder="94.5" inputmode="decimal"></div>
     </div>
     <button class="btn-primary" onclick="wtAdd()">💾 Сохранить</button>
   </div>
-
   <div class="chart-section">
     <p class="section-title">📈 График</p>
     <div class="chart-wrap"><canvas id="wtChart" role="img" aria-label="График веса" width="549" height="285" style="display: block; box-sizing: border-box; height: 190px; width: 366px;"></canvas></div>
   </div>
-
-  <div class="import-wt">
-    <p class="section-title">🍎 Импорт веса из Apple Health</p>
-    <button class="import-btn" onclick="document.getElementById(&#39;wt-file&#39;).click()">＋ Выбрать CSV файл</button>
-    <input type="file" id="wt-file" accept=".csv,.json" style="display:none" onchange="wtImport(event)">
-    <div class="import-res" id="wt-import-res"></div>
-  </div>
-
   <div class="log-section">
     <div class="log-header">📋 История</div>
     <div id="wt-log"><div class="empty">⚖️<br>Добавь первое измерение</div></div>
@@ -166,23 +142,28 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 <div class="page" id="page-health">
   <div class="header">
     <div class="header-row">
-      <div>
-        <p class="header-title">Здоровье</p>
-        <p class="header-sub" id="hd-date">четверг, 21 мая</p>
-      </div>
-      <div class="score-circle" id="hd-score">
-        <span id="hd-score-num">—</span>
-        <span class="score-label">из 8</span>
-      </div>
+      <div><p class="header-title">Здоровье</p><p class="header-sub" id="hd-date">четверг, 21 мая</p></div>
+      <div class="score-circle" id="hd-score"><span id="hd-score-num">—</span><span class="score-label">из 8</span></div>
     </div>
+  </div>
+
+  <div class="import-box">
+    <p class="section-title">🍎 Импорт из Auto Export</p>
+    <div class="import-drop" id="drop-zone" onclick="document.getElementById(&#39;hd-zip&#39;).click()" ondragover="ev.preventDefault();this.classList.add(&#39;over&#39;)" ondragleave="this.classList.remove(&#39;over&#39;)" ondrop="dropZip(event)">
+      <span class="import-drop-icon">📦</span>
+      <p class="import-drop-text">Нажми или перетащи ZIP файл</p>
+      <p class="import-drop-sub">HealthAutoExport_....zip · обновляет все метрики и вес</p>
+    </div>
+    <input type="file" id="hd-zip" accept=".zip,.json" style="display:none" onchange="zipChosen(event)">
+    <div class="import-res" id="hd-res"></div>
   </div>
 
   <div class="hsection"><p class="hsection-title">Активность</p></div>
   <div class="metrics-grid">
     <div class="mcard"><div class="mcard-bar" id="sb-cal"></div><div class="mcard-ico">🔥</div><p class="mcard-name">Активные калории</p><p class="mcard-val" id="mv-cal">—</p><p class="mcard-norm na" id="mn-cal">норма 500+ ккал</p></div>
     <div class="mcard"><div class="mcard-bar" id="sb-steps"></div><div class="mcard-ico">🚶</div><p class="mcard-name">Шаги</p><p class="mcard-val" id="mv-steps">—</p><p class="mcard-norm na" id="mn-steps">норма 7 000+</p></div>
-    <div class="mcard"><div class="mcard-bar" id="sb-ex"></div><div class="mcard-ico">🏃</div><p class="mcard-name">Тренировки</p><p class="mcard-val" id="mv-ex">—</p><p class="mcard-norm na" id="mn-ex">норма 30+ мин</p></div>
-    <div class="mcard"><div class="mcard-bar" id="sb-hr"></div><div class="mcard-ico">❤️</div><p class="mcard-name">Пульс в покое</p><p class="mcard-val" id="mv-hr">—</p><p class="mcard-norm na" id="mn-hr">норма 55–72 уд/мин</p></div>
+    <div class="mcard"><div class="mcard-bar" id="sb-ex"></div><div class="mcard-ico">🏃</div><p class="mcard-name">Тренировки</p><p class="mcard-val" id="mv-ex">—<span class="mcard-unit"> мин</span></p><p class="mcard-norm na" id="mn-ex">норма 30+ мин</p></div>
+    <div class="mcard"><div class="mcard-bar" id="sb-hr"></div><div class="mcard-ico">❤️</div><p class="mcard-name">Пульс в покое</p><p class="mcard-val" id="mv-hr">—<span class="mcard-unit"> уд</span></p><p class="mcard-norm na" id="mn-hr">норма 55–72 уд/мин</p></div>
   </div>
 
   <div class="hsection"><p class="hsection-title">Сон</p></div>
@@ -190,25 +171,10 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
     <div class="mcard"><div class="mcard-bar" id="sb-sleep"></div><div class="mcard-ico">😴</div><p class="mcard-name">Общий сон</p><p class="mcard-val" id="mv-sleep">—</p><p class="mcard-norm na" id="mn-sleep">норма 7–9 ч</p></div>
     <div class="mcard"><div class="mcard-bar" id="sb-deep"></div><div class="mcard-ico">🧠</div><p class="mcard-name">Глубокий сон</p><p class="mcard-val" id="mv-deep">—</p><p class="mcard-norm na" id="mn-deep">норма 1,5–2 ч</p></div>
     <div class="mcard"><div class="mcard-bar" id="sb-rem"></div><div class="mcard-ico">👁️</div><p class="mcard-name">REM-сон</p><p class="mcard-val" id="mv-rem">—</p><p class="mcard-norm na" id="mn-rem">норма 1,5–2 ч</p></div>
-    <div class="mcard"><div class="mcard-bar" id="sb-hrv"></div><div class="mcard-ico">📊</div><p class="mcard-name">ВСР (HRV)</p><p class="mcard-val" id="mv-hrv">—</p><p class="mcard-norm na" id="mn-hrv">норма 35–55 мс</p></div>
-  </div>
-
-  <div class="import-hd">
-    <p class="section-title">📲 Импорт из Auto Export</p>
-    <button class="import-btn" onclick="document.getElementById(&#39;hd-files&#39;).click()">＋ Выбрать CSV файлы (можно несколько)</button>
-    <input type="file" id="hd-files" accept=".csv,.json" multiple="" style="display:none" onchange="hdImport(event)">
-    <div class="import-res" id="hd-import-res"></div>
+    <div class="mcard"><div class="mcard-bar" id="sb-hrv"></div><div class="mcard-ico">📊</div><p class="mcard-name">ВСР (HRV)</p><p class="mcard-val" id="mv-hrv">—<span class="mcard-unit"> мс</span></p><p class="mcard-norm na" id="mn-hrv">норма 35–55 мс</p></div>
   </div>
 
   <button class="analyze-btn" onclick="analyzeDay()">📈 Анализ дня ↗</button>
-
-  <div class="shortcuts-card">
-    <p class="section-title">⏰ Автоэкспорт каждый день в 7:00</p>
-    <div class="step-row"><div class="step-num">1</div><div class="step-text">Открой <em>Быстрые команды</em> → <em>Автоматизация</em> → <em>+</em></div></div>
-    <div class="step-row"><div class="step-num">2</div><div class="step-text"><em>Личная автоматизация</em> → <em>Время суток</em> → 07:00 → Ежедневно</div></div>
-    <div class="step-row"><div class="step-num">3</div><div class="step-text">Действие: <em>Открыть приложение</em> → <em>Health Auto Export</em></div></div>
-    <div class="step-row"><div class="step-num">4</div><div class="step-text">В Auto Export настрой автоэкспорт метрик в формате CSV → папка Файлы</div></div>
-  </div>
 
   <div class="norms-card">
     <p class="section-title">📋 Нормы (муж., 48 лет)</p>
@@ -221,21 +187,22 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
     <div class="norm-row"><span class="norm-name">REM-сон</span><span class="norm-val">1,5–2 ч (≥17%)</span></div>
     <div class="norm-row"><span class="norm-name">ВСР (HRV)</span><span class="norm-val">35–55 мс</span></div>
   </div>
+
+  <div class="shortcuts-card">
+    <p class="section-title">⏰ Автоэкспорт каждый день в 7:00</p>
+    <div class="step-row"><div class="step-num">1</div><div class="step-text">Открой <em>Быстрые команды</em> → <em>Автоматизация</em> → <em>+</em></div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><em>Личная автоматизация</em> → <em>Время суток</em> → 07:00 → Ежедневно</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text">Действие: <em>Открыть приложение</em> → <em>Health Auto Export</em></div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text">В Auto Export настрой автоэкспорт → формат <em>JSON</em> → папка Файлы</div></div>
+  </div>
 </div>
 
 <!-- TAB BAR -->
 <div class="tabbar">
-  <button class="tab active" id="tab-weight" onclick="switchTab(&#39;weight&#39;)">
-    <span class="tab-icon">⚖️</span>
-    <span class="tab-label">Вес</span>
-  </button>
-  <button class="tab" id="tab-health" onclick="switchTab(&#39;health&#39;)">
-    <span class="tab-icon">❤️</span>
-    <span class="tab-label">Здоровье</span>
-  </button>
+  <button class="tab active" id="tab-weight" onclick="switchTab(&#39;weight&#39;)"><span class="tab-icon">⚖️</span><span class="tab-label">Вес</span></button>
+  <button class="tab" id="tab-health" onclick="switchTab(&#39;health&#39;)"><span class="tab-icon">❤️</span><span class="tab-label">Здоровье</span></button>
 </div>
 
-<!-- ANIM OVERLAY -->
 <div class="anim-overlay" id="anim-overlay">
   <div class="anim-emoji" id="anim-emoji">🎉</div>
   <div class="anim-text" id="anim-text"></div>
@@ -243,14 +210,15 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="./Моё здоровье_files/jszip.min.js.Без названия"></script>
 <script src="./Моё здоровье_files/chart.umd.js.Без названия"></script>
 <script>
 // ── TABS ──
-function switchTab(name){
+function switchTab(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('page-'+n).classList.add('active');
+  document.getElementById('tab-'+n).classList.add('active');
 }
 
 // ── TOAST ──
@@ -262,15 +230,14 @@ function toast(msg){
 
 // ── ANIMATIONS ──
 const WIN=[['🎉','Огонь!','Так держать — ты летишь к цели!'],['🏆','Чемпион!','Весы тебя уважают 💪'],['🚀','Взлетели!','−100г — и это только начало!'],['⚡','Молния!','Жир не успевает убежать!'],['🥇','Победа!','Организм говорит спасибо']];
-const MOCK=[['🐢','Черепаший темп…','Весы ждут — не дождутся!'],['😴','Кто-то спит на диете?','Жир решил остаться. Надолго.'],['🍕','Ммм, пицца?','Похоже, вчера была читмил-пятница'],['🙈','Весы прячут глаза','Может, завтра постараемся?'],['🥱','Без спешки…','Жировые клетки чувствуют себя уютно']];
+const MOCK=[['🐢','Черепаший темп…','Весы ждут — не дождутся!'],['😴','Кто-то спит на диете?','Жир решил остаться. Надолго.'],['🍕','Ммм, пицца?','Читмил-пятница?'],['🙈','Весы прячут глаза','Может, завтра постараемся?'],['🥱','Без спешки…','Жировые клетки чувствуют себя уютно']];
 function rnd(a){return a[Math.floor(Math.random()*a.length)];}
 function showAnim(positive,diff){
   const [emoji,title,sub]=positive?rnd(WIN):rnd(MOCK);
   const ov=document.getElementById('anim-overlay');
-  const em=document.getElementById('anim-emoji');
-  em.textContent=emoji;
+  document.getElementById('anim-emoji').textContent=emoji;
   document.getElementById('anim-text').textContent=title;
-  document.getElementById('anim-sub').textContent=(positive?'−'+Math.abs(diff).toFixed(1)+' кг · ':'')+sub;
+  document.getElementById('anim-sub').textContent=(positive&&diff?'−'+Math.abs(diff).toFixed(1)+' кг · ':'')+sub;
   ov.style.background=positive?'rgba(237,250,244,0.96)':'rgba(255,248,240,0.96)';
   ov.classList.add('show');
   if(positive)spawnConfetti();
@@ -279,11 +246,9 @@ function showAnim(positive,diff){
 function spawnConfetti(){
   const colors=['#007aff','#1d9e75','#ff9f0a','#ff375f','#5e5ce6','#30d158'];
   for(let i=0;i<40;i++){
-    const el=document.createElement('div');
-    el.className='confetti-piece';
+    const el=document.createElement('div');el.className='confetti-piece';
     el.style.cssText=`left:${10+Math.random()*80}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1+Math.random()*1.5}s;animation-delay:${Math.random()*0.5}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),2500);
+    document.body.appendChild(el);setTimeout(()=>el.remove(),2500);
   }
 }
 
@@ -294,27 +259,30 @@ try{wtEntries=JSON.parse(localStorage.getItem('mh_wt')||'[]');}catch(e){}
 const todayISO=()=>new Date().toISOString().slice(0,10);
 document.getElementById('wt-date').value=todayISO();
 let wtChart=null;
-
 function wtSave(){try{localStorage.setItem('mh_wt',JSON.stringify(wtEntries));}catch(e){}}
+
+function wtAddEntry(d,k,showAnimation){
+  const prev=wtEntries.length?wtEntries[wtEntries.length-1]:null;
+  wtEntries=wtEntries.filter(e=>e.d!==d);
+  wtEntries.push({d,k});
+  wtEntries.sort((a,b)=>a.d.localeCompare(b.d));
+  wtSave();wtRender();
+  if(showAnimation){
+    const newIdx=wtEntries.findIndex(e=>e.d===d);
+    if(newIdx>0){const diff=wtEntries[newIdx-1].k-k;showAnim(diff>=0.1,diff);}
+  }
+}
 
 function wtAdd(){
   const d=document.getElementById('wt-date').value;
   const k=parseFloat(document.getElementById('wt-kg').value);
   if(!d||isNaN(k)||k<40||k>250){toast('⚠️ Введи корректный вес');return;}
-  const idx=wtEntries.findIndex(e=>e.d===d);
-  const prevLast=wtEntries.length?wtEntries[wtEntries.length-1]:null;
-  wtEntries=wtEntries.filter(e=>e.d!==d);
-  wtEntries.push({d,k});
-  wtEntries.sort((a,b)=>a.d.localeCompare(b.d));
-  wtSave();wtRender();
+  wtAddEntry(d,k,true);
   document.getElementById('wt-kg').value='';
   toast('✅ Сохранено!');
-  const newIdx=wtEntries.findIndex(e=>e.d===d);
-  if(newIdx>0){const diff=wtEntries[newIdx-1].k-k;showAnim(diff>=0.1,diff);}
 }
 
 function wtDel(d){wtEntries=wtEntries.filter(e=>e.d!==d);wtSave();wtRender();toast('🗑 Удалено');}
-
 function fmtS(s){const[y,m,dd]=s.split('-');return dd+'.'+m;}
 function fmtF(s){const[y,m,dd]=s.split('-');return dd+'.'+m+'.'+y;}
 
@@ -355,57 +323,95 @@ function wtRenderLog(){
   const el=document.getElementById('wt-log');
   if(!wtEntries.length){el.innerHTML='<div class="empty">⚖️<br>Добавь первое измерение</div>';return;}
   el.innerHTML=[...wtEntries].reverse().map((e,i,arr)=>{
-    const prev=arr[i+1];
-    let delta='';
+    const prev=arr[i+1];let delta='';
     if(prev){const diff=+(e.k-prev.k).toFixed(1);const s=diff>0?'+':'';const c=diff<0?'#1d9e75':diff>0?'#ff3b30':'#8e8e93';delta=`<span class="log-delta" style="color:${c}">${s}${diff} кг</span>`;}
     return`<div class="log-row"><span class="log-date">${fmtF(e.d)}</span><span class="log-kg">${e.k.toFixed(1)} кг</span>${delta}<button class="log-del" onclick="wtDel('${e.d}')">🗑</button></div>`;
   }).join('');
 }
 
-function wtImport(e){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    const text=ev.target.result;
-    const lines=text.trim().split(/\r?\n/);
-    if(lines.length<2){showImportRes('wt',false,'Файл пуст');return;}
-    const headers=lines[0].split(',').map(h=>h.trim().replace(/["']/g,'').toLowerCase());
-    const valIdx=headers.findIndex(h=>/(qty|value|quantity|вес|weight)/i.test(h));
-    const dateIdx=headers.findIndex(h=>/(date|дата)/i.test(h));
-    if(valIdx<0){showImportRes('wt',false,'Колонка с весом не найдена');return;}
-    let added=0;
-    lines.slice(1).forEach(line=>{
-      const cols=line.split(',').map(c=>c.trim().replace(/["']/g,''));
-      const v=parseFloat(cols[valIdx]);
-      const ds=cols[dateIdx]||'';
-      const m=ds.match(/(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
-      if(!m||isNaN(v)||v<40||v>250)return;
-      const d=m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
-      if(!wtEntries.find(e=>e.d===d)){wtEntries.push({d,k:+v.toFixed(1)});added++;}
-    });
-    wtEntries.sort((a,b)=>a.d.localeCompare(b.d));
-    wtSave();wtRender();
-    showImportRes('wt',true,'Добавлено записей: '+added);
-  };
-  r.readAsText(f);
-  e.target.value='';
-}
-
-// ── HEALTH DASHBOARD ──
-const NORMS={cal:{min:500,good:700},steps:{min:7000,good:10000},ex:{min:30,good:45},hr:{min:55,max:72,warnMax:85},sleep:{min:420,good:480},deep:{min:90,good:110},rem:{min:90,good:110},hrv:{min:35,good:45,max:55}};
+// ── HEALTH / ZIP IMPORT ──
+const NORMS={cal:{min:500,good:700},steps:{min:7000,good:10000},ex:{min:30,good:45},hr:{min:55,max:72},sleep:{min:7,good:8},deep:{min:1.5,good:2},rem:{min:1.5,good:2},hrv:{min:35,good:45,max:55}};
 let hdData={cal:null,steps:null,ex:null,hr:null,sleep:null,deep:null,rem:null,hrv:null};
 
 document.getElementById('hd-date').textContent=new Date().toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'});
+
+function dropZip(e){e.preventDefault();document.getElementById('drop-zone').classList.remove('over');const f=e.dataTransfer.files[0];if(f)processFile(f);}
+function zipChosen(e){const f=e.target.files[0];if(f)processFile(f);e.target.value='';}
+
+function processFile(file){
+  const res=document.getElementById('hd-res');
+  res.style.display='none';
+  if(file.name.endsWith('.zip')){
+    JSZip.loadAsync(file).then(zip=>{
+      const jsonFile=Object.values(zip.files).find(f=>f.name.endsWith('.json')&&!f.dir);
+      if(!jsonFile){showRes(false,'JSON файл не найден в архиве');return;}
+      jsonFile.async('string').then(text=>{
+        try{parseHealthJSON(JSON.parse(text));}
+        catch(e){showRes(false,'Ошибка чтения JSON: '+e.message);}
+      });
+    }).catch(e=>showRes(false,'Ошибка открытия ZIP: '+e.message));
+  }else if(file.name.endsWith('.json')){
+    const r=new FileReader();
+    r.onload=ev=>{try{parseHealthJSON(JSON.parse(ev.target.result));}catch(e){showRes(false,'Ошибка JSON');}};
+    r.readAsText(file);
+  }else{showRes(false,'Нужен ZIP или JSON файл из Auto Export');}
+}
+
+function parseHealthJSON(j){
+  const metrics=(j.data&&j.data.metrics)||j.metrics||[];
+  if(!metrics.length){showRes(false,'Метрики не найдены в файле');return;}
+
+  let found=[],weightAdded=false;
+
+  metrics.forEach(m=>{
+    const name=m.name||'';
+    const pts=m.data||[];
+    if(!pts.length)return;
+    const last=pts[pts.length-1];
+
+    if(name==='active_energy'&&last.qty!=null){
+      hdSetMetric('cal',last.qty);found.push('Калории');
+    }
+    if(name==='step_count'&&last.qty!=null){
+      hdSetMetric('steps',last.qty);found.push('Шаги');
+    }
+    if(name==='apple_exercise_time'&&last.qty!=null){
+      hdSetMetric('ex',last.qty);found.push('Тренировки');
+    }
+    if(name==='resting_heart_rate'&&last.qty!=null){
+      hdSetMetric('hr',last.qty);found.push('Пульс');
+    }
+    if(name==='heart_rate_variability'&&last.qty!=null){
+      hdSetMetric('hrv',last.qty);found.push('HRV');
+    }
+    if(name==='sleep_analysis'){
+      if(last.totalSleep!=null){hdSetMetric('sleep',last.totalSleep);found.push('Сон');}
+      if(last.deep!=null){hdSetMetric('deep',last.deep);found.push('Глубокий сон');}
+      if(last.rem!=null){hdSetMetric('rem',last.rem);found.push('REM');}
+    }
+    if(name==='weight_body_mass'&&last.qty!=null){
+      const d=last.date?last.date.slice(0,10):todayISO();
+      wtAddEntry(d,last.qty,false);
+      weightAdded=true;found.push('Вес');
+    }
+  });
+
+  if(!found.length){showRes(false,'Нужные метрики не найдены');return;}
+  let msg='✅ Загружено: '+found.join(', ');
+  if(weightAdded)msg+='\n⚖️ Вес обновлён на вкладке "Вес"';
+  showRes(true,msg);
+  toast('✅ Данные загружены!');
+}
 
 function hdSetMetric(key,val){
   const n=NORMS[key];
   let status='na',normText='',normClass='na',display='';
 
   if(key==='sleep'||key==='deep'||key==='rem'){
-    const h=Math.floor(val/60),m=Math.round(val%60);
+    const h=Math.floor(val),m=Math.round((val-h)*60);
     display=h+'ч'+(m>0?' '+m+'м':'');
   }else if(key==='steps'){
-    display=Math.round(val).toLocaleString('ru');
+    display=Math.round(val).toLocaleString('ru-RU');
   }else{
     display=Math.round(val)+'';
   }
@@ -417,17 +423,17 @@ function hdSetMetric(key,val){
     if(val>=n.min){status='ok';normText='В норме ✓';normClass='ok';}
     else{status='warn';normText='Низкий ⚠';normClass='warn';}
   }else{
-    if(val>=(n.good||n.min)){status='ok';normText='Отлично ✓';normClass='ok';}
+    const threshold=n.good||n.min;
+    if(val>=threshold){status='ok';normText='Отлично ✓';normClass='ok';}
     else if(val>=n.min){status='ok';normText='В норме ✓';normClass='ok';}
     else{status='warn';normText='Дефицит ⚠';normClass='warn';}
   }
 
-  document.getElementById('mv-'+key).textContent=display;
+  document.getElementById('mv-'+key).childNodes[0].nodeValue=display;
   document.getElementById('sb-'+key).className='mcard-bar '+status;
   const nm=document.getElementById('mn-'+key);
   nm.textContent=normText;nm.className='mcard-norm '+normClass;
-  hdData[key]=val;
-  hdUpdateScore();
+  hdData[key]=val;hdUpdateScore();
 }
 
 function hdUpdateScore(){
@@ -446,73 +452,17 @@ function hdUpdateScore(){
   el.className='score-circle '+(pct>=0.75?'ok':pct>=0.5?'warn':'bad');
 }
 
-function hdImport(e){
-  const files=Array.from(e.target.files);if(!files.length)return;
-  let results=[],pending=files.length;
-  files.forEach(f=>{
-    const r=new FileReader();
-    r.onload=ev=>{
-      const res=hdParseCSV(f.name,ev.target.result);
-      results=results.concat(res);
-      if(--pending===0)hdFinishImport(results);
-    };
-    r.readAsText(f);
-  });
-  e.target.value='';
-}
-
-function hdParseCSV(fname,text){
-  const fl=fname.toLowerCase();
-  let type=null;
-  if(/(active.?energy|active_energy|калори)/i.test(fl))type='cal';
-  else if(/(step.?count|steps|шаги)/i.test(fl))type='steps';
-  else if(/(exercise|workout|тренир)/i.test(fl))type='ex';
-  else if(/(resting.?heart|heart.?rate|пульс)/i.test(fl))type='hr';
-  else if(/(sleep|сон)/i.test(fl))type='sleep';
-  else if(/(hrv|heart.?rate.?variab|всрс?)/i.test(fl))type='hrv';
-  if(!type)return[];
-
-  const lines=text.trim().split(/\r?\n/);
-  if(lines.length<2)return[];
-  const headers=lines[0].split(',').map(h=>h.trim().replace(/["']/g,'').toLowerCase());
-  const valIdx=headers.findIndex(h=>/(qty|value|quantity|duration)/i.test(h));
-  if(valIdx<0)return[];
-
-  let vals=[];
-  lines.slice(1).forEach(line=>{
-    if(!line.trim())return;
-    const cols=line.split(',').map(c=>c.trim().replace(/["']/g,''));
-    const v=parseFloat(cols[valIdx]);
-    if(!isNaN(v))vals.push(v);
-  });
-  if(!vals.length)return[];
-
-  let value;
-  if(type==='hr'||type==='hrv')value=vals.reduce((s,v)=>s+v,0)/vals.length;
-  else value=vals.reduce((s,v)=>s+v,0);
-  return[{type,value}];
-}
-
-function hdFinishImport(results){
-  if(!results.length){showImportRes('hd',false,'Данные не распознаны — проверь названия файлов');return;}
-  results.forEach(r=>hdSetMetric(r.type,r.value));
-  showImportRes('hd',true,'Загружено: '+results.length+' метрик');
-  toast('✅ Данные импортированы!');
-}
-
-function showImportRes(prefix,ok,msg){
-  const el=document.getElementById(prefix+'-import-res');
-  el.textContent=(ok?'✅ ':'⚠️ ')+msg;
-  el.className='import-res '+(ok?'ok':'err');
-  el.style.display='block';
+function showRes(ok,msg){
+  const el=document.getElementById('hd-res');
+  el.textContent=msg;el.className='import-res '+(ok?'ok':'err');el.style.display='block';
 }
 
 function analyzeDay(){
   const labels={cal:'Активные калории',steps:'Шаги',ex:'Тренировки',hr:'Пульс в покое',sleep:'Общий сон',deep:'Глубокий сон',rem:'REM-сон',hrv:'ВСР (HRV)'};
-  const units={cal:'ккал',steps:'шагов',ex:'мин',hr:'уд/мин',sleep:'мин',deep:'мин',rem:'мин',hrv:'мс'};
+  const units={cal:'ккал',steps:'шагов',ex:'мин',hr:'уд/мин',sleep:'ч',deep:'ч',rem:'ч',hrv:'мс'};
   const filled=Object.keys(hdData).filter(k=>hdData[k]!==null);
   if(!filled.length){toast('⚠️ Сначала импортируй данные');return;}
-  const lines=filled.map(k=>labels[k]+': '+Math.round(hdData[k])+' '+units[k]);
+  const lines=filled.map(k=>labels[k]+': '+hdData[k].toFixed(1)+' '+units[k]);
   const wt=wtEntries.length?wtEntries[wtEntries.length-1].k:null;
   if(wt)lines.unshift('Вес: '+wt.toFixed(1)+' кг (цель 82 кг)');
   const msg='Мои данные здоровья за сегодня (мне 48 лет, цель — похудеть на 13 кг):\n'+lines.join('\n')+'\n\nПроанализируй каждый показатель относительно норм для моего возраста и дай конкретные рекомендации.';
