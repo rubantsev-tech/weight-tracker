@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_3.html -->
+<!-- saved from url=(0048)file:///C:/Users/ruban/Downloads/myhealth_4.html -->
 <html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -149,12 +149,12 @@ body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Tex
 
   <div class="import-box">
     <p class="section-title">🍎 Импорт из Auto Export</p>
-    <div class="import-drop" id="drop-zone" onclick="document.getElementById(&#39;hd-zip&#39;).click()" ondragover="ev.preventDefault();this.classList.add(&#39;over&#39;)" ondragleave="this.classList.remove(&#39;over&#39;)" ondrop="dropZip(event)">
+    <label for="hd-zip" class="import-drop" id="drop-zone" ondragover="event.preventDefault();this.classList.add(&#39;over&#39;)" ondragleave="this.classList.remove(&#39;over&#39;)" ondrop="dropZip(event)" style="display:block;cursor:pointer;">
       <span class="import-drop-icon">📦</span>
-      <p class="import-drop-text">Нажми или перетащи ZIP файл</p>
+      <p class="import-drop-text">Нажми здесь чтобы выбрать ZIP файл</p>
       <p class="import-drop-sub">HealthAutoExport_....zip · обновляет все метрики и вес</p>
-    </div>
-    <input type="file" id="hd-zip" accept=".zip,.json" style="display:none" onchange="zipChosen(event)">
+    </label>
+    <input type="file" id="hd-zip" accept=".zip,.json,application/zip,application/json" style="display:none" onchange="zipChosen(event)">
     <div class="import-res" id="hd-res"></div>
   </div>
 
